@@ -1,0 +1,54 @@
+.solution-panel {
+  display: grid;
+  grid-template-columns: 3fr repeat(6, 3fr) 3fr;
+  grid-template-areas: 
+    ". candidates candidates candidates candidates candidates candidates ."
+    ". .          .          check      conclusion .          .          .";
+}
+
+
+.candidates {
+  grid-area: candidates;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.candidate-answer {
+  margin: 1em;
+  padding: 1em;
+  border-radius: .4em;
+  background-color: darkred;
+  cursor: pointer;
+}
+
+.candidate-answer.selected {
+  background-color: darkblue;
+}
+
+.check {
+  margin: 1em;
+  padding: 1em;
+  border-radius: .4em;
+  cursor: pointer;
+  grid-area: check;
+  border-color: darkcyan;
+  border-style: solid;
+  border-width: 0.2em;
+  background-color: darkcyan;
+}
+
+.check:hover {
+  border-color: bisque;
+}
+
+.check:active {
+  background-color: rgb(3, 82, 82)
+}
+
+.conclusion {
+  margin: 1em;
+  padding: 1em;
+  border-radius: .4em;
+  border-width: 0.2em;
+  grid-area: conclusion;
+}
