@@ -7,7 +7,6 @@ function arrOf(n: number, offset: number) {
 }
 
 export function Board(props: {callback: (x: number, y: number) => 'none' | 'solve' | 'ask'}) {
-
   const content = (x: number, y: number) => {
     const s = props.callback(x, y)
     if (s === 'none') {
