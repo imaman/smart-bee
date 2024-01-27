@@ -62,7 +62,7 @@ jobs:
       - name: Build        
         run: yarn build
         env: 
-          PUBLIC_URL=https://imaman.github.io/smart-bee
+          PUBLIC_URL: https://imaman.github.io/smart-bee
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
