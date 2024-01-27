@@ -3,7 +3,7 @@
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
 name: Deploy react site to Pages
-
+      
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -74,6 +74,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     needs: build
     steps:
       - name: Deploy to GitHub Pages
