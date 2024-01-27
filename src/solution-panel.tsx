@@ -10,6 +10,7 @@ export function SolutionPanel(props: {answers: number[]}) {
 
   const clicked = (n: number) => {
     setSelected(n)
+    setIsCorrect('unset')
   }
 
   const checkClicked = () => {

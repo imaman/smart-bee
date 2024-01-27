@@ -3,15 +3,38 @@ import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
 
+
+function pickNumber(n: number) {
+  return Math.min(n, Math.trunc(Math.random() * n) + 1)
+}
+
+const x = pickNumber(10)
+const y = pickNumber(10)
+const xy = x * y
+
+const set = new Set<number>()
+
+while (set.size < 3) {
+  set.add(Math.max(xy - pickNumber(10), 0))
+  set.add(Math.max(xy + pickNumber(10), 0))
+}
+
+const answers = [xy]
+set.forEach(n => {
+  if (answers.length < 4) {
+    answers.push(n)
+  }
+})
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <div className="table">
-          <Board callback={(x, y) => x === 4 && y === 5 ? 'ask' : x === 4 || y === 5 ? 'solve' : 'none'}/>
+          <Board callback={(i, j) => i === x && j === y ? 'ask' : i === x || j === y ? 'solve' : 'none'}/>
         </div>
         <div className="answers">
-          <SolutionPanel answers={[20, 4, 8, 19]}></SolutionPanel>
+          <SolutionPanel answers={answers}></SolutionPanel>
         </div>
       </header>
     </div>
