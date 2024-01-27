@@ -16,10 +16,16 @@
   border-width: 2px;
   border-color: blueviolet;
   margin: 5px;
+  padding: 5px;
 }
 
 
 .cell.edge {
   border-style: none;
 }
+
+.cell.ask {
+  color: red
+};
+
 
