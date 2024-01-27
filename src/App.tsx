@@ -11,7 +11,7 @@ function App() {
           <Board callback={(x, y) => x === 4 && y === 5 ? 'ask' : x === 4 || y === 5 ? 'solve' : 'none'}/>
         </div>
         <div className="answers">
-          <SolutionPanel answers={[4, 8, 20, 19]}></SolutionPanel>
+          <SolutionPanel answers={[20, 4, 8, 19]}></SolutionPanel>
         </div>
       </header>
     </div>

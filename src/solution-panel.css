@@ -1,9 +1,9 @@
 .solution-panel {
   display: grid;
-  grid-template-columns: 2fr repeat(4, 5fr) 2fr;
+  grid-template-columns: 3fr repeat(6, 3fr) 3fr;
   grid-template-areas: 
-    ". candidates candidates candidates candidates ."
-    ". .          check      check      .          .";
+    ". candidates candidates candidates candidates candidates candidates ."
+    ". .          .          check      conclusion .          .          .";
 }
 
 
@@ -43,4 +43,12 @@
 
 .check:active {
   background-color: rgb(3, 82, 82)
+}
+
+.conclusion {
+  margin: 1em;
+  padding: 1em;
+  border-radius: .4em;
+  border-width: 0.2em;
+  grid-area: conclusion;
 }
