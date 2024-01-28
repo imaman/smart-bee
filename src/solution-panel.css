@@ -8,6 +8,7 @@
 
 
 .candidates {
+  font-size: 3vh;
   grid-area: candidates;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -26,6 +27,8 @@
 }
 
 .check {
+  align-self: center;
+  font-size: 3vh;
   margin: 1em;
   padding: 1em;
   border-radius: .4em;
@@ -46,6 +49,7 @@
 }
 
 .conclusion {
+  font-size: 4vh;
   margin: 1em;
   padding: 1em;
   border-radius: .4em;
