@@ -1,17 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
-
-
-function pickNumber(n: number) {
-  return Math.min(n, Math.trunc(Math.random() * n) + 1)
-}
-
-const x = pickNumber(9) + 1
-const y = pickNumber(9) + 1
-const xy = x * y
-
+import { pickNumber } from './pick-number';
+import { pickFrom } from './pick-from'
 
 
 function pickUniqueNumbers(n: number, generator: () => number) {
@@ -26,18 +18,33 @@ function pickUniqueNumbers(n: number, generator: () => number) {
   return ret
 }
 
-
-const numLower = pickNumber(4) - 1
-const answers = [xy, ...pickUniqueNumbers(numLower, () => Math.max(xy - pickNumber(10), 0)), ...pickUniqueNumbers(4 - (numLower + 1), () => Math.max(xy + pickNumber(10), 0))]
+function pickAnswers() {
+  const x = pickNumber(9) + 1
+  const y = pickNumber(9) + 1
+  const xy = x * y
+  
+  const numLower = pickNumber(4) - 1
+  return {
+    values: [xy, ...pickUniqueNumbers(numLower, () => Math.max(xy - pickNumber(10), 0)), ...pickUniqueNumbers(4 - (numLower + 1), () => Math.max(xy + pickNumber(10), 0))],  
+    x,
+    y
+  }
+}
 
 function App() {
+  const [picked, setPicked] = useState(() => pickAnswers())
+  const [answerToSkip, setAnswerToSkip] = useState(-1)
+
+  useEffect(() => {
+    setPicked(pickAnswers())
+  }, [answerToSkip])
   return (
     <div className="app">
       <div className="table">
-        <Board callback={(i, j) => i === x && j === y ? 'ask' : i === x || j === y ? 'solve' : 'none'}/>
+        <Board callback={(i, j) => i === picked.x && j === picked.y ? 'ask' : i === picked.x || j === picked.y ? 'solve' : 'none'}/>
       </div>
       <div className="answers">
-        <SolutionPanel answers={answers}></SolutionPanel>
+        <SolutionPanel answers={picked.values} onSolved = {() => setAnswerToSkip(picked.values[0])}></SolutionPanel>
       </div>
     </div>
   );
