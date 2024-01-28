@@ -13,12 +13,12 @@ export function SolutionPanel(props: {answers: number[], onSolved: () => void}) 
       return
     }
     setSelected(n)
-    if (n === props.answers[0] || true) {
+    if (n === props.answers[0]) {
       setIsCorrect('yes')
       setTimeout(() => {
         setIsCorrect('unset')
         props.onSolved()
-      }, 0)
+      }, 2500)
     } else {
       setIsCorrect('no')
     }
@@ -26,7 +26,7 @@ export function SolutionPanel(props: {answers: number[], onSolved: () => void}) 
 
   return <div className="solution-panel">
     <div className='candidates'>
-      {sorted.map(at => <div className={'candidate-answer ' + (selected === at ? 'selected' : '')} key={at} onClick={() => clicked(at)}>{at}</div>)}
+      {sorted.map(at => <div className={'candidate-answer' + (selected === at ? ' selected' : '') + (at === props.answers[0] ? ' correct' : '')} key={at} onClick={() => clicked(at)}>{at}</div>)}
     </div>
     {isCorrect === 'yes' ? <Confetti gravity={0.5}/> : <></>}
   </div>

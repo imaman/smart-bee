@@ -34,6 +34,11 @@
 }
 
 .candidate-answer.selected {
+  border-color: darkred;
+  background-color: darkred;
+}
+
+.candidate-answer.correct.selected {
   border-color: darkblue;
   background-color: darkblue;
 }

@@ -3,40 +3,57 @@ import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
 import { pickNumber } from './pick-number';
-import { pickFrom } from './pick-from'
+import { pickFrom, pickFromRange } from './pick-from'
 
 
-function pickUniqueNumbers(n: number, generator: () => number) {
-  let i = 0;
-  const set = new Set<number>()
-  while (set.size < n && i < 100) {
-    ++i
-    set.add(generator())
+function pickXy(answerToSkip: number) {
+  for (let i= 0; i < 100; ++i) {
+    const x = pickNumber(9) + 1
+    const y = pickNumber(9) + 1
+    const xy = x * y
+
+    if (xy === answerToSkip) {
+      continue
+    }
+    return {x, y, xy}
   }
-  const ret: number[] = []
-  set.forEach(n => ret.push(n))
-  return ret
+
+  return {
+    x: 4, 
+    y: 5, 
+    xy: 20    
+  }
 }
 
-function pickAnswers() {
-  const x = pickNumber(9) + 1
-  const y = pickNumber(9) + 1
-  const xy = x * y
-  
-  const numLower = pickNumber(4) - 1
+function pickAnswers(answerToSkip: number) {
+  const {x, y, xy} = pickXy(answerToSkip)
+
+  const from = Math.max(0, xy - 10)
+  const to = Math.min(100, xy + 10)
+
+  const numBelow = pickNumber(4) - 1
+
+  let below = pickFromRange(numBelow, from, xy - 1)
+  let above = pickFromRange(3 - below.length, xy + 1, to)
+
+  if (below.length + above.length < 3) {
+    below = pickFromRange(3, 1, xy - 1)
+    above = []
+  }
+
   return {
-    values: [xy, ...pickUniqueNumbers(numLower, () => Math.max(xy - pickNumber(10), 0)), ...pickUniqueNumbers(4 - (numLower + 1), () => Math.max(xy + pickNumber(10), 0))],  
+    values: [xy, ...below, ...above],
     x,
     y
   }
 }
 
 function App() {
-  const [picked, setPicked] = useState(() => pickAnswers())
+  const [picked, setPicked] = useState(() => pickAnswers(-1))
   const [answerToSkip, setAnswerToSkip] = useState(-1)
 
   useEffect(() => {
-    setPicked(pickAnswers())
+    setPicked(pickAnswers(answerToSkip))
   }, [answerToSkip])
   return (
     <div className="app">
@@ -47,6 +64,7 @@ function App() {
         <SolutionPanel answers={picked.values} onSolved = {() => setAnswerToSkip(picked.values[0])}></SolutionPanel>
       </div>
     </div>
+
   );
 }
 
