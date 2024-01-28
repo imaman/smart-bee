@@ -8,23 +8,27 @@ function pickNumber(n: number) {
   return Math.min(n, Math.trunc(Math.random() * n) + 1)
 }
 
-const x = pickNumber(10)
-const y = pickNumber(10)
+const x = pickNumber(9) + 1
+const y = pickNumber(9) + 1
 const xy = x * y
 
-const set = new Set<number>()
 
-while (set.size < 3) {
-  set.add(Math.max(xy - pickNumber(10), 0))
-  set.add(Math.max(xy + pickNumber(10), 0))
+
+function pickUniqueNumbers(n: number, generator: () => number) {
+  let i = 0;
+  const set = new Set<number>()
+  while (set.size < n && i < 100) {
+    ++i
+    set.add(generator())
+  }
+  const ret: number[] = []
+  set.forEach(n => ret.push(n))
+  return ret
 }
 
-const answers = [xy]
-set.forEach(n => {
-  if (answers.length < 4) {
-    answers.push(n)
-  }
-})
+
+const numLower = pickNumber(4) - 1
+const answers = [xy, ...pickUniqueNumbers(numLower, () => Math.max(xy - pickNumber(10), 0)), ...pickUniqueNumbers(4 - (numLower + 1), () => Math.max(xy + pickNumber(10), 0))]
 
 function App() {
   return (
