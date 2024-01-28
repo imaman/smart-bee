@@ -28,15 +28,13 @@ set.forEach(n => {
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="table">
-          <Board callback={(i, j) => i === x && j === y ? 'ask' : i === x || j === y ? 'solve' : 'none'}/>
-        </div>
-        <div className="answers">
-          <SolutionPanel answers={answers}></SolutionPanel>
-        </div>
-      </header>
+    <div className="app">
+      <div className="table">
+        <Board callback={(i, j) => i === x && j === y ? 'ask' : i === x || j === y ? 'solve' : 'none'}/>
+      </div>
+      <div className="answers">
+        <SolutionPanel answers={answers}></SolutionPanel>
+      </div>
     </div>
   );
 }
