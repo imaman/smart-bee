@@ -3,7 +3,7 @@ import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
 import { pickNumber } from './pick-number';
-import { pickFrom, pickFromRange } from './pick-from'
+import { pickFromRange } from './pick-from'
 
 
 function pickXy(answerToSkip: number) {
