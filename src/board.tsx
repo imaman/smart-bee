@@ -14,7 +14,7 @@ export function Board(props: {callback: (x: number, y: number) => 'none' | 'solv
     }
 
     if (s === 'ask') {
-      return <div key={x*y} className="cell ask">{`${x} x ${y} = ?`}</div>
+      return <div key={x*y} className="cell ask">{`${x} x ${y}`}</div>
     }
 
     if (s === 'solve') {
