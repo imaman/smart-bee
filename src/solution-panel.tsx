@@ -17,6 +17,7 @@ export function SolutionPanel(props: {answers: number[], onSolved: () => void}) 
       setIsCorrect('yes')
       setTimeout(() => {
         setIsCorrect('unset')
+        setSelected(-1)
         props.onSolved()
       }, 2500)
     } else {
