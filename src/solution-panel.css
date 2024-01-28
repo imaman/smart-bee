@@ -18,11 +18,23 @@
   margin: 1em;
   padding: 1em;
   border-radius: .4em;
-  background-color: darkred;
+  background-color: darkcyan;
+  border-color: darkcyan;
+  border-style: solid;
+  border-width: 0.2em;
   cursor: pointer;
 }
 
+.candidate-answer:hover {
+  border-color: bisque;
+}
+
+.candidate-answer:active {
+  background-color: rgb(3, 82, 82)
+}
+
 .candidate-answer.selected {
+  border-color: darkblue;
   background-color: darkblue;
 }
 

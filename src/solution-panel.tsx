@@ -9,12 +9,11 @@ export function SolutionPanel(props: {answers: number[]}) {
   const [isCorrect, setIsCorrect] = useState<'yes'|'no'|'unset'>('unset')
 
   const clicked = (n: number) => {
+    if (isCorrect === 'yes') {
+      return
+    }
     setSelected(n)
-    setIsCorrect('unset')
-  }
-
-  const checkClicked = () => {
-    if (selected === props.answers[0]) {
+    if (n === props.answers[0]) {
       setIsCorrect('yes')
       setTimeout(() => {
         window.location.reload()
@@ -23,12 +22,11 @@ export function SolutionPanel(props: {answers: number[]}) {
       setIsCorrect('no')
     }
   }
+
   return <div className="solution-panel">
     <div className='candidates'>
       {sorted.map(at => <div className={'candidate-answer ' + (selected === at ? 'selected' : '')} key={at} onClick={() => clicked(at)}>{at}</div>)}
     </div>
-    <div className="check" onClick={checkClicked}>❔</div>
-    <div className="conclusion">{isCorrect === 'yes' ? '☑️' : isCorrect === 'no' ? '✘' : ''}</div>
     {isCorrect === 'yes' ? <Confetti gravity={0.5}/> : <></>}
   </div>
 }
