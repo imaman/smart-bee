@@ -3,7 +3,7 @@ import './solution-panel.css';
 import Confetti from 'react-confetti'
 
 
-export function SolutionPanel(props: {answers: number[]}) {
+export function SolutionPanel(props: {answers: number[], onSolved: () => void}) {
   const sorted = [...props.answers].sort((a,b) => a-b)
   const [selected, setSelected] = useState(-1)
   const [isCorrect, setIsCorrect] = useState<'yes'|'no'|'unset'>('unset')
@@ -16,7 +16,8 @@ export function SolutionPanel(props: {answers: number[]}) {
     if (n === props.answers[0]) {
       setIsCorrect('yes')
       setTimeout(() => {
-        window.location.reload()
+        setIsCorrect('unset')
+        props.onSolved()
       }, 2500)
     } else {
       setIsCorrect('no')
@@ -25,7 +26,7 @@ export function SolutionPanel(props: {answers: number[]}) {
 
   return <div className="solution-panel">
     <div className='candidates'>
-      {sorted.map(at => <div className={'candidate-answer ' + (selected === at ? 'selected' : '')} key={at} onClick={() => clicked(at)}>{at}</div>)}
+      {sorted.map(at => <div className={'candidate-answer' + (selected === at ? ' selected' : '') + (at === props.answers[0] ? ' correct' : '')} key={at} onClick={() => clicked(at)}>{at}</div>)}
     </div>
     {isCorrect === 'yes' ? <Confetti gravity={0.5}/> : <></>}
   </div>

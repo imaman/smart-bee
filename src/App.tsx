@@ -1,45 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
+import { pickNumber } from './pick-number';
+import { pickFromRange } from './pick-from'
 
 
-function pickNumber(n: number) {
-  return Math.min(n, Math.trunc(Math.random() * n) + 1)
-}
+function pickXy(answerToSkip: number) {
+  for (let i= 0; i < 100; ++i) {
+    const x = pickNumber(9) + 1
+    const y = pickNumber(9) + 1
+    const xy = x * y
 
-const x = pickNumber(9) + 1
-const y = pickNumber(9) + 1
-const xy = x * y
-
-
-
-function pickUniqueNumbers(n: number, generator: () => number) {
-  let i = 0;
-  const set = new Set<number>()
-  while (set.size < n && i < 100) {
-    ++i
-    set.add(generator())
+    if (xy === answerToSkip) {
+      continue
+    }
+    return {x, y, xy}
   }
-  const ret: number[] = []
-  set.forEach(n => ret.push(n))
-  return ret
+
+  return {
+    x: 4, 
+    y: 5, 
+    xy: 20    
+  }
 }
 
+function pickAnswers(answerToSkip: number) {
+  const {x, y, xy} = pickXy(answerToSkip)
 
-const numLower = pickNumber(4) - 1
-const answers = [xy, ...pickUniqueNumbers(numLower, () => Math.max(xy - pickNumber(10), 0)), ...pickUniqueNumbers(4 - (numLower + 1), () => Math.max(xy + pickNumber(10), 0))]
+  const from = Math.max(0, xy - 10)
+  const to = Math.min(100, xy + 10)
+
+  const numBelow = pickNumber(4) - 1
+
+  let below = pickFromRange(numBelow, from, xy - 1)
+  let above = pickFromRange(3 - below.length, xy + 1, to)
+
+  if (below.length + above.length < 3) {
+    below = pickFromRange(3, 1, xy - 1)
+    above = []
+  }
+
+  return {
+    values: [xy, ...below, ...above],
+    x,
+    y
+  }
+}
 
 function App() {
+  const [picked, setPicked] = useState(() => pickAnswers(-1))
+  const [answerToSkip, setAnswerToSkip] = useState(-1)
+
+  useEffect(() => {
+    setPicked(pickAnswers(answerToSkip))
+  }, [answerToSkip])
   return (
     <div className="app">
       <div className="table">
-        <Board callback={(i, j) => i === x && j === y ? 'ask' : i === x || j === y ? 'solve' : 'none'}/>
+        <Board callback={(i, j) => i === picked.x && j === picked.y ? 'ask' : i === picked.x || j === picked.y ? 'solve' : 'none'}/>
       </div>
       <div className="answers">
-        <SolutionPanel answers={answers}></SolutionPanel>
+        <SolutionPanel answers={picked.values} onSolved = {() => setAnswerToSkip(picked.values[0])}></SolutionPanel>
       </div>
     </div>
+
   );
 }
 
