@@ -39,8 +39,8 @@
 }
 
 .candidate-answer.correct.selected {
-  border-color: darkblue;
-  background-color: darkblue;
+  border-color: lightblue;
+  background-color: lightblue;
 }
 
 .check {

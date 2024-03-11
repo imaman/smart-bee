@@ -1,12 +1,13 @@
 
 body {
-  background-color: #282c34;
+  background-color: whitesmoke;
   text-align: center;
   font-family: 'Ubuntu Mono', monospace;
 }
 
 .app {
-  color: white;
+  color: black;
+  font-weight: bold;
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
   grid-template-areas:  

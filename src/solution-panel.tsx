@@ -29,6 +29,6 @@ export function SolutionPanel(props: {answers: number[], onSolved: () => void}) 
     <div className='candidates'>
       {sorted.map(at => <div className={'candidate-answer' + (selected === at ? ' selected' : '') + (at === props.answers[0] ? ' correct' : '')} key={at} onClick={() => clicked(at)}>{at}</div>)}
     </div>
-    {isCorrect === 'yes' ? <Confetti gravity={0.5}/> : <></>}
+    {isCorrect === 'yes' ? <Confetti gravity={0.8} tweenDuration={2000} friction={0.95} recycle={false}/> : <></>}
   </div>
 }
