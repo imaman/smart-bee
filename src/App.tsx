@@ -3,10 +3,10 @@ import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
 import { pickNumber } from './pick-number';
-import { pickFrom, pickFromRange, pickOneFrom } from './pick-from'
+import { pickFromRange, pickOneFrom } from './pick-from'
 
 
-function pickXy(answerToSkip: number, score: number) {
+function pickXy(answerToSkip: number, _score: number) {
   for (let i= 0; i < 100; ++i) {
     const x = pickOneFrom([ 2, 3, 4, 6, 7, 8, 9])
     const y = pickOneFrom([ 2, 3, 4, 6, 7, 8, 9])
