@@ -23,6 +23,7 @@ export function SolutionPanel(props: {answers: number[], onSolved: () => void}) 
       }, 2500)
     } else {
       setIsCorrect('no')
+      new Audio('wrong.wav').play()
     }
   }
 
