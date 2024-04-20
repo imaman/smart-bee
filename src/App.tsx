@@ -3,13 +3,13 @@ import './App.css';
 import { Board } from './board';
 import { SolutionPanel } from './solution-panel';
 import { pickNumber } from './pick-number';
-import { pickFromRange } from './pick-from'
+import { pickFrom, pickFromRange, pickOneFrom } from './pick-from'
 
 
-function pickXy(answerToSkip: number) {
+function pickXy(answerToSkip: number, score: number) {
   for (let i= 0; i < 100; ++i) {
-    const x = pickNumber(9) + 1
-    const y = pickNumber(9) + 1
+    const x = pickOneFrom([ 2, 3, 4, 6, 7, 8, 9])
+    const y = pickOneFrom([ 2, 3, 4, 6, 7, 8, 9])
     const xy = x * y
 
     if (xy === answerToSkip) {
@@ -25,8 +25,8 @@ function pickXy(answerToSkip: number) {
   }
 }
 
-function pickAnswers(answerToSkip: number) {
-  const {x, y, xy} = pickXy(answerToSkip)
+function pickAnswers(answerToSkip: number, score: number) {
+  const {x, y, xy} = pickXy(answerToSkip, score)
 
   const from = Math.max(0, xy - 10)
   const to = Math.min(100, xy + 10)
@@ -49,11 +49,12 @@ function pickAnswers(answerToSkip: number) {
 }
 
 function App() {
-  const [picked, setPicked] = useState(() => pickAnswers(-1))
+  const [score, setScore] = useState(0)
+  const [picked, setPicked] = useState(() => pickAnswers(-1, score))
   const [answerToSkip, setAnswerToSkip] = useState(-1)
 
   useEffect(() => {
-    setPicked(pickAnswers(answerToSkip))
+    setPicked(pickAnswers(answerToSkip, score))
   }, [answerToSkip])
   return (
     <div className="app">
@@ -61,7 +62,13 @@ function App() {
         <Board callback={(i, j) => i === picked.x && j === picked.y ? 'ask' : i === picked.x || j === picked.y ? 'solve' : 'none'}/>
       </div>
       <div className="answers">
-        <SolutionPanel answers={picked.values} onSolved = {() => setAnswerToSkip(picked.values[0])}></SolutionPanel>
+        <SolutionPanel answers={picked.values} onSolved = {() => {
+          setScore(score + 1)
+          setAnswerToSkip(picked.values[0])
+        }}></SolutionPanel>
+      </div>
+      <div className="score">
+        <div className="score-value">{score > 0 ? score : ''}</div>
       </div>
     </div>
 

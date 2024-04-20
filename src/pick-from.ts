@@ -4,13 +4,17 @@ export function pickFrom(n: number, input: number[]) {
   n = Math.min(n, input.length)
   const arr = [...input]
   for (let i = 0; i < n; ++i) {
-    const j = pickNumber(arr.length - i) - 1
+    const j = i + pickNumber(arr.length - i) - 1
     const t = arr[i]
     arr[i] = arr[j]
     arr[j] = t
   }
 
   return arr.slice(0, n)
+}
+
+export function pickOneFrom(input: number[]) {
+  return pickFrom(1, input)[0]
 }
 
 export function pickFromRange(n: number, low: number, high: number) {
