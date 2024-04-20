@@ -55,7 +55,7 @@ function App() {
 
   useEffect(() => {
     setPicked(pickAnswers(answerToSkip, score))
-  }, [answerToSkip])
+  }, [answerToSkip, score])
   return (
     <div className="app">
       <div className="table">
